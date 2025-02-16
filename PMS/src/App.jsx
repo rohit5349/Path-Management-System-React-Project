@@ -6,7 +6,7 @@ import Login from './Login/Login.jsx'
 import Contact from './contact/contact.jsx'
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Result from './Result/Result.jsx'
-import Firstpage from './assets/component/FirstPage/firstpage.jsx';
+import Firstpage from './assets/component/FirstPage/Firstpage.jsx';
 import { useEffect, useState } from 'react';
 
 function App(){
