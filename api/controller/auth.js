@@ -105,6 +105,8 @@ export const login = async (req , res) =>{
                     token,
                     userObject,
                     message : "user logged in successfully",  
+                    name    : existingUser.name,
+                    user    : userObject,
                 });
            }
            else{
