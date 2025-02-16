@@ -9,7 +9,6 @@ import Result from './Result/Result.jsx'
 import Firstpage from './assets/component/FirstPage/firstpage.jsx';
 import { useEffect, useState } from 'react';
 
-
 function App(){
      const [showMainContent , setShowMainContent] = useState(false);
      useEffect(()=>{
@@ -18,11 +17,7 @@ function App(){
           } , 3000);    
           
           return ()=>clearTimeout(timer);
-
      },[]);
-
-    
-
      return(
          <Router>
             <div>
@@ -59,8 +54,53 @@ function FirstPagewithContent(){
           </div>
           <div className="images">
                <img src="./images/image1.png" alt="" />
+               <img src='./images/middlePage.png' className='middle'/>
                <img src="./images/image2.png" className='img2' alt="" />
           </div>
+            
+            <footer className="footer">
+               <div className="footer-content">
+
+                    <div className="contact-info">
+                      <h3>Contact Us</h3>
+                      <p>Email: rohitsinghmaurya20@gmail.com</p>
+                      <p>Phone: +91 - 7007839424</p>
+                    </div>
+
+                    <div className="social-links">
+                        <h3>Follow Us</h3>
+
+                        <div className='instagram'>
+                          <img src="./images/instagram.png" alt="" />
+                          <a href='https://www.instagram.com/r_s_m87/' target='_blank' rel='noopener noreferrer'>
+                             Instagram
+                          </a>
+                        </div>
+
+                        <div className='facebook'>
+                          <img src="./images/facebook.png" alt="" />
+                          <a href='https://www.facebook.com/share/1AAwkUqGNC/' target='_blank' rel='noopener noreferrer'>
+                             Facebook
+                          </a>
+                        </div>
+
+                        <div className='github'>
+                          <img src="./images/github.png" alt="" />
+                          <a href='https://github.com/rohit5349' target='_blank' rel='noopener noreferrer'>
+                             GitHub
+                          </a>
+                        </div>
+                      
+                      <div className='linkdin'>
+                         <img src="./images/linkdin.png" alt="" />
+                        <a href='https://www.linkedin.com/in/rohit5349/' target='_blank' rel='noopener noreferrer'>
+                           Linkdin
+                        </a>
+                      </div>
+
+                    </div>
+               </div>
+            </footer>
         </div>
       );
 };
