@@ -12,17 +12,21 @@ const Contact = () => {
 
   useEffect(() => {
     if (!mapRef.current) {
-     const  leafletMap = L.map('map').setView([51.505, -0.09], 13);
+      const mapElement = document.getElementById("map");
+      if (!mapElement){
+         return;
+      }
+  
+      const leafletMap = L.map(mapElement).setView([51.505, -0.09], 13);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(leafletMap);
-
+  
       mapRef.current = leafletMap;
+      getCurrentLocation();
     }
-
-    getCurrentLocation();
-
+  
     return () => {
       if (mapRef.current) {
         mapRef.current.remove();
@@ -30,10 +34,11 @@ const Contact = () => {
       }
     };
   }, []);
+  
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
+       navigator.geolocation.getCurrentPosition(async (position) => {
         const currentLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -85,21 +90,22 @@ const Contact = () => {
 
   function DisplayNotAttractionMessage(){
        const attractionList = document.getElementById('attractions');
-       attractionList.innerHTML = '<li>No Tourist Attraction Found Near this Location</li>'
+       attractionList.innerHTML = '<li>No Tourist Locations Found Near this Location</li>'
   }
 
 
   function DisplayTouristAttraction(attractions){
          const attractionList = document.getElementById('attractions');
          attractionList.innerHTML = '';
-         attractions.forEach(attraction =>{
+        
+         attractions.slice(0 , 10).forEach(attraction =>{
              const listItem = document.createElement('li');
-             listItem.textContent = attraction.tags?.name || 'Unnamed Attraction';
-             
+             listItem.textContent = attraction.tags?.name || 'UnNamed Location';
              listItem.classList.add('attraction-item');
              listItem.style.fontSize = 'small';
+
              attractionList.appendChild(listItem);
-         })
+         });
   }
 
 
@@ -187,7 +193,6 @@ const Contact = () => {
 
     const sortedLocations = sortLocationsByProximity(locations);
 
-    
     navigate('/result', { state: { path: sortedLocations } });
   };
 
@@ -267,7 +272,9 @@ const Contact = () => {
           <div className="container">
             <div className="taskbox"></div>
             <div className="emptybox">
-              <div id="map"></div>
+               <div id="empty-map-box">
+                 <div id="map" style={{width: "100%", height: "400px"}}></div>
+               </div>
             </div>
           </div>
         </div>
@@ -277,3 +284,6 @@ const Contact = () => {
 };
 
 export default Contact;
+
+
+
