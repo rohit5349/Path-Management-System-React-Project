@@ -1,10 +1,17 @@
 import './Navigation.css';
-import { Link } from 'react-router-dom';
+import { Link , useNavigate , useLocation} from 'react-router-dom';
 import React , {useState , useEffect, useRef} from 'react';
 import MainPage from '../../MainPage/MainPage.jsx';
 
 
 const Navigation = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/'
+  const [currentImageIndex , setCurrenImageIndex] = useState(0);
+  const [isLoggedIn , setIsLoggedIn] = useState(false);
+  const [isDropdownOpen , setIsDropdownOpen] = useState(false);
+  const [userName , setUserName] = useState('');
 
  const images = [
      'images/Delhi_Gate.jpg',
@@ -18,7 +25,6 @@ const Navigation = () => {
      'images/varanasiGhat.jpg',
  ];
 
- const [currentImageIndex , setCurrenImageIndex] = useState(0);
 
  useEffect(()=>{
    const interval = setInterval(() =>{
@@ -29,38 +35,101 @@ const Navigation = () => {
 
  },[images.length])
 
+useEffect(()=>{
+    const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    const name = localStorage.getItem('username') || '';
+    setIsLoggedIn(loggedIn);
+    setUserName(name);
+} , [])
+
+ const handleProfileClick = ()=>{
+     setIsDropdownOpen(!isDropdownOpen);
+ }
+
+
+ const handleLoginClick = ()=>{
+       if(!isLoggedIn){
+         navigate('/Login', { state : {from: location.pathname}});
+       }
+       else{
+        setIsDropdownOpen(!isDropdownOpen);
+       }
+ } 
+
+ const handleLogout = ()=>{
+     setIsLoggedIn(false);
+     localStorage.setItem('isLoggedIn' , 'false');
+      localStorage.removeItem('username');
+     setIsDropdownOpen(false);
+     navigate('/');
+ }
  
   return (
-  <div className="navigation_fullscreen"
-     style={{backgroundImage: `url(${images[currentImageIndex]})`}}
-  >
-    <nav  className="navi">
-      <img src="/images/map.png" alt="Map Logo" />
-      <ul>
-        <div>
-          <h4>
-            <Link to="/login">Login</Link>
-          </h4>
-        </div>
-        <div>
-          <h4>
-            <Link to="/contact">Contact</Link>
-          </h4>
-        </div>
-        <div>
-          <h4>
-            <Link to="/way">Way</Link>
-          </h4>
-        </div>
-        <div>
-          <h4>
-            <Link to="/adventure">Adventure</Link>
-          </h4>
-        </div>
-      </ul>
-    </nav>
-    <div className="scroll_indicator">Scroll Down</div>
-  </div>
+     <div>
+         <div className="navigation_fullscreen">
+         <img
+           src = {images[currentImageIndex]}
+           alt='Travel'
+           className='fullscreen_image'
+         />
+  
+         <div  className="navi">
+           <img src="/images/map.png" alt="Map Logo" />
+              <div className='txt'>
+                {/* <h4><Link to="/login">Login</Link></h4> */}
+                <h4><Link to="/contact">Best Route</Link></h4>
+                <h4><Link to="/way">Hotel Booking</Link></h4>
+                <h4><Link to="/adventure">Adventure</Link></h4>
+              </div>
+         </div>
+          <div className="profile-dropdown">
+              <div
+                className='profile-icon'
+                onClick={handleProfileClick}
+              >
+                 👤
+              </div>
+
+              {isDropdownOpen && (
+                 <div className="dropdown-menu">
+                    {!isLoggedIn ?(
+                       <button 
+                         className="dropdown-item"
+                         onClick={handleLoginClick}
+                        >
+                          Login
+                       </button>
+                    ):(
+                      <>
+                      <div className="dropdown-item">Hi, {userName}</div>
+                     <div className="profile-logout">
+                       <div className="profile-part">
+                         <img src="images/profile.png" alt="" />
+                           <button
+                             className='dropdown-item'
+                             onClick={()=> alert("Profile clicked")}
+                           >
+                             Profile
+                           </button>
+                       </div>
+
+                         <div className="logout-part">
+                           <img src="images/logout.png" alt="" />
+                            <button 
+                                className="dropdown-item"
+                                onClick={handleLogout}
+                              >
+                                 Logout
+                             </button>
+                         </div>
+                      </div>
+                      </>
+                    )}
+                 </div>
+              )}
+          </div>
+      </div>
+     </div>
   );
 };
 
