@@ -8,35 +8,33 @@ import cors from "cors";
 dotenv.config();
 
 const app = express();
-
-const PORT  = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
-app.use(cors(
-     origin: ["https://path-management-system-react-project-tu3h.vercel.app/"],
-     methods: ["POST" , "GET"],
-     credentials: true
-));
+app.use(cors({
+    origin: "https://path-management-system-react-project-tu3h.vercel.app", // ✅ Fixed
+    methods: ["POST", "GET"],
+    credentials: true 
+}));
 
 app.use(cookieParser());
+app.use('/api', userRouter);
 
-app.use('/api' , userRouter);
-
-const connect = async () =>{
+const connect = async () => {
      try {
         await mongoose.connect(process.env.MONGO_URL);
-        console.log("Connected to the MongoDB");
+        console.log("✅ Connected to MongoDB");
      } catch (error) {
-        throw error;
+        console.error("❌ MongoDB Connection Error:", error.message);
+        process.exit(1);
      }
-}
+};
 
-app.get('/' , (req , res)=>{
-    res.send("hello guys!")   
+app.get('/', (req, res) => {
+    res.send("Hello guys!");
 });
 
-app.listen(PORT , ()=>{
-      connect();
-      console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, () => {
+    connect();
+    console.log(`🚀 Server is running on port ${PORT}`);
 });
-
