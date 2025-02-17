@@ -88,7 +88,7 @@ export const login = async (req , res) =>{
            // verify the password and generate the jwt token
 
            if(await bcrypt.compare(password , existingUser.password)){
-                let token = jwt.sign(payload , process.env.MONGO_URL , {
+                let token = jwt.sign(payload , process.env.JWT_SECRET , {
                      expiresIn : "2h"
                 });
 
