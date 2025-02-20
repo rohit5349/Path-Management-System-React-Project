@@ -14,6 +14,7 @@
   justify-content: center;
 }
 
+
 .background-video {
   position: absolute;
   top: 0;
@@ -21,7 +22,18 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
+  z-index: -2; 
+}
+
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); 
+  z-index: -1; 
 }
 
 
@@ -34,21 +46,24 @@
   padding: 20px;
 }
 
-
 .flow-container {
   height: 500px;
   width: 80%;
   margin: auto;
-  background: rgba(0, 0, 0, 0.6); 
+  background: transparent; 
   border-radius: 10px;
   padding: 10px;
 }
 
+
 div.ReactFlow {
-  background-color: rgba(255, 255, 255, 0.2); 
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  overflow: hidden;
+  background-color: transparent !important; 
+  border: none;
+}
+
+
+.react-flow__attribution {
+  display: none !important;
 }
 
 
@@ -68,6 +83,7 @@ div.ReactFlow {
   stroke-width: 2px;
 }
 
+
 .react-flow__edge-text {
   font-size: 12px;
   font-weight: bold;
@@ -75,16 +91,8 @@ div.ReactFlow {
 }
 
 
-.react-flow__minimap {
-  background-color: #f9fafb;
-  border: 1px solid #ddd;
-}
-
-
 .react-flow__controls {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  display: none;
 }
 
 
