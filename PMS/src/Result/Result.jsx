@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import ReactFlow, { MiniMap, Controls } from "react-flow-renderer";
+import ReactFlow from "react-flow-renderer";
 import "./Result.css";
 
 const Result = () => {
@@ -51,11 +51,11 @@ const Result = () => {
         <source src="./video/black-blue.mp4" type="video/mp4" />
       </video>
 
+      <div className="overlay"></div>
+
       <div className="content">
         <div className="flow-container">
           <ReactFlow nodes={nodes} edges={edges} fitView>
-            <MiniMap nodeColor={(node) => node.style.background} />
-            <Controls />
           </ReactFlow>
         </div>
       </div>
