@@ -5,7 +5,7 @@ import "./Result.css";
 
 const Result = () => {
   const location = useLocation();
-  const path = location.state?.path || []; // Safely access state and provide a fallback
+  const path = location.state?.path || [];
 
   const [loading, setLoading] = useState(true);
 
@@ -14,20 +14,20 @@ const Result = () => {
   }, [path]);
 
   if (loading) {
-    return <div>Loading path data...</div>;
+    return <div className="loading-message">Loading path data...</div>;
   }
 
   if (!path || path.length === 0) {
-    return <div>No path data available. Please try again.</div>;
+    return <div className="error-message">No path data available. Please try again.</div>;
   }
 
-  const colors = ["#FFD700", "#FF7F50", "#87CEEB", "#32CD32"]; // Custom colors for nodes
+  const colors = ["#FFD700", "#FF7F50", "#87CEEB", "#32CD32"];
   const nodes = path.map((location, index) => ({
     id: `${index + 1}`,
     data: { label: location.name },
-    position: { x: index * 200, y: 100 }, // Spread nodes
+    position: { x: index * 200, y: 100 },
     style: {
-      background: colors[index % colors.length], // Cycle through colors
+      background: colors[index % colors.length],
       color: "#fff",
       border: "1px solid #333",
       borderRadius: "10px",
@@ -40,19 +40,24 @@ const Result = () => {
     source: `${index + 1}`,
     target: `${index + 2}`,
     label: `${index + 1}`,
-    animated: true, // Add animation to edges
+    animated: true,
     style: { stroke: "#888" },
     labelStyle: { fill: "#000", fontWeight: "bold" },
   }));
 
   return (
-    <div className>
-      <h1>Shortest Path Visualization</h1>
-      <div style={{ height: "500px", width: "100%" }}>
-        <ReactFlow nodes={nodes} edges={edges} fitView>
-          <MiniMap nodeColor={(node) => node.style.background} />
-          <Controls />
-        </ReactFlow>
+    <div className="result-container">
+      <video autoPlay loop muted className="background-video">
+        <source src="./video/black-blue.mp4" type="video/mp4" />
+      </video>
+
+      <div className="content">
+        <div className="flow-container">
+          <ReactFlow nodes={nodes} edges={edges} fitView>
+            <MiniMap nodeColor={(node) => node.style.background} />
+            <Controls />
+          </ReactFlow>
+        </div>
       </div>
     </div>
   );
