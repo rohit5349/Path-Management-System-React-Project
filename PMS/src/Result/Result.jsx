@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import ReactFlow from "react-flow-renderer";
+import ReactFlow, { Controls, MiniMap } from "react-flow-renderer";
 import "./Result.css";
 
 const Result = () => {
@@ -22,10 +22,12 @@ const Result = () => {
   }
 
   const colors = ["#FFD700", "#FF7F50", "#87CEEB", "#32CD32"];
+  
+  const nodeSpacing = 250; 
   const nodes = path.map((location, index) => ({
     id: `${index + 1}`,
     data: { label: location.name },
-    position: { x: index * 200, y: 100 },
+    position: { x: index * nodeSpacing, y: 100 }, 
     style: {
       background: colors[index % colors.length],
       color: "#fff",
@@ -39,10 +41,8 @@ const Result = () => {
     id: `e${index + 1}-${index + 2}`,
     source: `${index + 1}`,
     target: `${index + 2}`,
-    label: `${index + 1}`,
     animated: true,
     style: { stroke: "#888" },
-    labelStyle: { fill: "#000", fontWeight: "bold" },
   }));
 
   return (
@@ -55,7 +55,15 @@ const Result = () => {
 
       <div className="content">
         <div className="flow-container">
-          <ReactFlow nodes={nodes} edges={edges} fitView>
+          <ReactFlow 
+            nodes={nodes} 
+            edges={edges} 
+            fitView 
+            zoomOnScroll={true} 
+            panOnDrag={true} 
+          >
+            <MiniMap nodeColor={(node) => node.style.background} />
+            <Controls />
           </ReactFlow>
         </div>
       </div>
@@ -64,3 +72,4 @@ const Result = () => {
 };
 
 export default Result;
+
