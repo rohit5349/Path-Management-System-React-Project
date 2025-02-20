@@ -243,7 +243,7 @@ const Contact = () => {
         <div className="location-container">
           <input
             type="text"
-            placeholder="Enter Your Current Location."
+            placeholder="Enter Current Location."
             className="input1"
           />
           <button onClick={addLocation} type="submit" id="findlocation">
@@ -254,7 +254,7 @@ const Contact = () => {
           </button>
           <input
             type="text"
-            placeholder="Enter Your Destination Location"
+            placeholder="Enter Destination Location"
             className="input2"
           />
          
