@@ -264,7 +264,7 @@ const Contact = () => {
             onClick={calculateAndDisplayShortestPath}
             className="mt-[20px]"
           >
-            Find Path
+            Find Route
           </button>
 
           <ul id = 'attractions' className="attractions"></ul>
