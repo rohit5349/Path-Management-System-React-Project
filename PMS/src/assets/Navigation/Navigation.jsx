@@ -79,7 +79,7 @@ useEffect(()=>{
                 {/* <h4><Link to="/login">Login</Link></h4> */}
                 <h4><Link to="/contact">Best Route</Link></h4>
                 <h4><Link to="https://hotel-booking-fronted.vercel.app/">Hotel Booking</Link></h4>
-                <h4><Link to="/adventure">Adventure</Link></h4>
+               <h4><Link to="/chatbot">Help Us</Link></h4>
               </div>
          </div>
           <div className="profile-dropdown">
