@@ -12,7 +12,7 @@ const Chatbot = () => {
     setMessages(newMessages);
 
     try {
-      const response = await axios.post("http://localhost:4000/api/chatbot", {
+      const response = await axios.post("https://path-management-system-react-project-2.onrender.com/api/chatbot", {
         message: input,
       });
       setMessages([...newMessages, { text: response.data.reply, sender: "bot" }]);
