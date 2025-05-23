@@ -2,13 +2,14 @@ import './App.css';
 import Navigation from './assets/Navigation/Navigation.jsx'
 import Page1 from './assets/component/page1/page1.jsx'
 import Page2 from './assets/component/page2/page2.jsx'
-import Login from './Login/Login.jsx'
-import Contact from './contact/contact.jsx'
+import Login from './Login/Login1.jsx'
+import Contact from './contact/contact1.jsx';
+import Chatbot from './chatbot/chatbot1.jsx';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Result from './Result/Result.jsx'
-import Firstpage from './assets/component/FirstPage/firstpage.jsx';
+import Result from './Result/Result1.jsx'
+import Firstpage from './assets/component/FirstPage/Firstpage.jsx';
 import { useEffect, useState } from 'react';
-
+import Footer from '././assets/component/Footer/FooterPage.jsx';
 
 function App(){
      const [showMainContent , setShowMainContent] = useState(false);
@@ -18,13 +19,10 @@ function App(){
           } , 3000);    
           
           return ()=>clearTimeout(timer);
-
      },[]);
-
-    
-
      return(
          <Router>
+           
             <div>
                  <Routes>
                      <Route path='/' element=
@@ -40,6 +38,7 @@ function App(){
                      <Route path='/login' element={<Login/>} />
                      <Route path='/contact' element = {<Contact/>} />
                      <Route path='/result' element = {<Result/>} />
+                     <Route path='/chatbot' element = {<Chatbot/>}/>
                  </Routes>
             </div>
            
@@ -59,8 +58,10 @@ function FirstPagewithContent(){
           </div>
           <div className="images">
                <img src="./images/image1.png" alt="" />
+               <img src='./images/middlePage.png' className='middle'/>
                <img src="./images/image2.png" className='img2' alt="" />
           </div>
+            <Footer/>
         </div>
       );
 };

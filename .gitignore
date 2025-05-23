@@ -1,0 +1,30 @@
+# OS-generated files
+.DS_Store
+Thumbs.db
+
+# Log files
+*.log
+
+# Environment files
+.env
+
+# Dependency directories
+node_modules/
+vendor/
+
+# Build artifacts
+*.o
+*.class
+*.exe
+
+# Temporary files
+*.swp
+*.tmp
+
+# Compiled assets
+/dist/
+/build/
+
+# IDE-specific files
+.vscode/
+.idea/

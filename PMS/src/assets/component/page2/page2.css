@@ -1,4 +1,4 @@
-.scroller{
+.scroller {
     white-space: nowrap;
     overflow-x: hidden;
     overflow-y: hidden;
@@ -6,7 +6,7 @@
     position: relative;
 }
 
-.scroller-in{
+.scroller-in {
     display: inline-block;
     white-space: nowrap;
     animation-name: scroll;
@@ -15,7 +15,7 @@
     animation-iteration-count: infinite;
 }
 
-.scroller-in h4{
+.scroller-in h4 {
     display: inline-block;
     font-size: 120px;
     font-weight: 900;
@@ -56,7 +56,6 @@
     padding: 0 50px;
 }
 
-
 .about-us img {
     height: 100%;
     object-fit: cover;
@@ -81,3 +80,81 @@
     line-height: 26px;
 }
 
+/* Media Queries */
+
+/* For tablets and medium devices */
+@media (max-width: 1024px) {
+    .scroller-in h4 {
+        font-size: 80px;
+    }
+
+    .about-us {
+        flex-direction: column;
+        height: auto;
+        padding: 30px 20px;
+    }
+
+    .about-us img {
+        width: 30%;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    .about-us-in {
+        width: 80%;
+        height: auto;
+    }
+
+    .about-us-in h3 {
+        font-size: 40px;
+    }
+
+    .about-us-in p {
+        font-size: 18px;
+    }
+}
+
+/* For small devices and phones */
+@media (max-width: 768px) {
+    .scroller-in h4 {
+        font-size: 50px;
+    }
+
+    .about-us img {
+        width: 40%;
+    }
+
+    .about-us-in h3 {
+        font-size: 32px;
+    }
+
+    .about-us-in p {
+        font-size: 16px;
+        line-height: 24px;
+    }
+}
+
+/* For extra small devices */
+@media (max-width: 480px) {
+    .scroller-in h4 {
+        font-size: 36px;
+        margin-right: 5px;
+    }
+
+    .about-us img {
+        width: 50%;
+    }
+
+    .about-us-in {
+        width: 90%;
+    }
+
+    .about-us-in h3 {
+        font-size: 26px;
+    }
+
+    .about-us-in p {
+        font-size: 14px;
+        line-height: 22px;
+    }
+}

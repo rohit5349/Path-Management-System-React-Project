@@ -1,6 +1,5 @@
 {
-  "type": "module",
-  "dependencies": {
-    "dotenv": "^16.4.5"
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.3"
   }
 }

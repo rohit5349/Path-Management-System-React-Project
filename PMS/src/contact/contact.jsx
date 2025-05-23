@@ -1,28 +1,36 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import L from 'leaflet';
+import L, { marker } from 'leaflet';
 import './contact.css';
+import Pagination from '../assets/component/Pagination/pagination.jsx';
 
 const Contact = () => {
   const [locations, setLocations] = useState([]); 
   const [markers, setMarkers] = useState([]); 
+  const [showNearest , setShowNearest] = useState(false);
   const mapRef = useRef(null);
   const navigate = useNavigate();
+
+  const itemsPerPage = 4;
+  const [currentPage , setCurrentPage] = useState(1);
+  const[touristPlace , setTouristPlace] = useState([]);
   
+
+  const handlePageChange = (page)=>{
+      setCurrentPage(page);
+  }
 
   useEffect(() => {
     if (!mapRef.current) {
-     const  leafletMap = L.map('map').setView([51.505, -0.09], 13);
+      const leafletMap = L.map('map').setView([20.5937, 78.9629], 5);
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         maxZoom: 19,
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       }).addTo(leafletMap);
-
+  
       mapRef.current = leafletMap;
+      getCurrentLocation();
     }
-
-    getCurrentLocation();
-
+  
     return () => {
       if (mapRef.current) {
         mapRef.current.remove();
@@ -30,10 +38,11 @@ const Contact = () => {
       }
     };
   }, []);
+  
 
   const getCurrentLocation = () => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(async (position) => {
+       navigator.geolocation.getCurrentPosition(async (position) => {
         const currentLocation = {
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -71,7 +80,10 @@ const Contact = () => {
      .then(data =>{
       
          if(data.elements && data.elements.length > 0){
-              DisplayTouristAttraction(data.elements);
+              setTouristPlace([]);
+              const attractions = data.elements.filter(element => element.tags && element.tags.tourism).slice(0 , 15);
+              setTouristPlace(prev => [...prev , ...attractions]);
+              setShowNearest(true);
          }  
          else{
             DisplayNotAttractionMessage();
@@ -85,21 +97,7 @@ const Contact = () => {
 
   function DisplayNotAttractionMessage(){
        const attractionList = document.getElementById('attractions');
-       attractionList.innerHTML = '<li>No Tourist Attraction Found Near this Location</li>'
-  }
-
-
-  function DisplayTouristAttraction(attractions){
-         const attractionList = document.getElementById('attractions');
-         attractionList.innerHTML = '';
-         attractions.forEach(attraction =>{
-             const listItem = document.createElement('li');
-             listItem.textContent = attraction.tags?.name || 'Unnamed Attraction';
-             
-             listItem.classList.add('attraction-item');
-             listItem.style.fontSize = 'small';
-             attractionList.appendChild(listItem);
-         })
+       attractionList.innerHTML = '<li>No Tourist Locations Found Near this Location</li>'
   }
 
 
@@ -172,11 +170,24 @@ const Contact = () => {
       document.querySelector('.taskbox').classList.remove('move-left');
       document.querySelector('.emptybox').classList.remove('move-right');
     }
-
+    
     if (markers.length > 0) {
-      mapRef.current.removeLayer(markers.pop());
-      locations.pop();
+       mapRef.current.removeLayer(markers.pop());
+       locations.pop();
     }
+
+    if(markers.length === 0){
+       setShowNearest(false);
+    }
+    
+    const prevMarker = markers[markers.length - 1];
+    if(prevMarker){
+       const {lat , lng} = prevMarker.getLatLng();
+       mapRef.current.setView([lat , lng] , 12);
+       setTouristPlace([]);
+       setShowNearest(false);
+       fetchTouristAttraction(lat , lng);
+    } 
   };
 
   const calculateAndDisplayShortestPath = () => {
@@ -187,7 +198,6 @@ const Contact = () => {
 
     const sortedLocations = sortLocationsByProximity(locations);
 
-    
     navigate('/result', { state: { path: sortedLocations } });
   };
 
@@ -225,20 +235,28 @@ const Contact = () => {
     return R * c; 
   };
 
-
+  
+  const IndexofLastItem = currentPage * itemsPerPage;
+  const IndexofFirstItem = IndexofLastItem - itemsPerPage;
+  const currentListofItems = touristPlace.slice(IndexofFirstItem , IndexofLastItem);
 
   return (
     <div>
-      <div className="firstbox">
+       <video autoPlay loop muted className="background-video">
+         <source src='./video/UI.mp4' type="video/mp4" />
+       </video>
+      <div className='firstbox'>
         <h1>
           Discover Your Path,
           <br />
           A Journey of Self-Exploration.
         </h1>
+      </div>
+
         <div className="location-container">
           <input
             type="text"
-            placeholder="Enter Your Current Location."
+            placeholder="Enter Current Location."
             className="input1"
           />
           <button onClick={addLocation} type="submit" id="findlocation">
@@ -249,31 +267,56 @@ const Contact = () => {
           </button>
           <input
             type="text"
-            placeholder="Enter Your Destination Location"
+            placeholder="Enter Destination Location"
             className="input2"
           />
-         
 
-          <button
-            id="calculatepath"
-            onClick={calculateAndDisplayShortestPath}
-            className="mt-[20px]"
-          >
-            Find Path
-          </button>
+           <button
+              id="calculatepath"
+              onClick={calculateAndDisplayShortestPath}
+              className="mt-[20px]"
+             >
+              Find Path
+           </button>
 
-          <ul id = 'attractions' className="attractions"></ul>
-
+            {showNearest && (
+              <div className='pagination-container'>
+                 <h1 className='heading'>Nearest Locations</h1>
+                 <h1 className='pagination'>
+                     <ul id='attractions' className='list-items'>
+                        {
+                             currentListofItems.map((listItem)=>(
+                              <li key={listItem.id}>
+                                 {listItem.tags?.name || "Unnamed Location"}
+                              </li>
+                           ))
+                        }
+                     </ul>
+                  </h1>
+    
+                  <Pagination
+                     currentPage={currentPage}
+                     totalPages={Math.floor(touristPlace.length / itemsPerPage)}
+                     onPageChange={handlePageChange}
+                  />   
+              </div>
+         )} 
+          
           <div className="container">
-            <div className="taskbox"></div>
-            <div className="emptybox">
-              <div id="map"></div>
-            </div>
-          </div>
-        </div>
+           <div className="taskbox"></div>
+           <div className="emptybox">
+              <div id="map-container">
+                 <div id="map"></div>
+              </div>
+           </div>
+         </div>      
       </div>
     </div>
   );
 };
 
 export default Contact;
+
+
+
+

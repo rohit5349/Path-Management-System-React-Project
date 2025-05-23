@@ -1,5 +1,6 @@
 import {img1} from '../../../utils/image1.js'
 import './page2.css'
+import { useEffect } from 'react';
 
 const page2 = () => {
   return (

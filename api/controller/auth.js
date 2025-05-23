@@ -63,6 +63,7 @@ export const login = async (req , res) =>{
            }
 
            const existingUser = await user.findOne({email});
+           console.log(existingUser);
 
            if(!existingUser){
               return res.status(404).json({
@@ -105,6 +106,8 @@ export const login = async (req , res) =>{
                     token,
                     userObject,
                     message : "user logged in successfully",  
+                    name    : existingUser.name,
+                    user    : userObject,
                 });
            }
            else{
@@ -122,6 +125,4 @@ export const login = async (req , res) =>{
           });
       }
 };
-
-
 

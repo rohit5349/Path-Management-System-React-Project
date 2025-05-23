@@ -1,46 +1,68 @@
-.container {
-  margin-top: 8%;
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
-  background-color: aqua;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-direction: row;
-  border-bottom-left-radius: 25px;
-  border-bottom-right-radius: 25px;
+  body, html, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
+  
 .firstbox {
-  height: 100vh;
+  height: 70%;
   width: 100%;
   position: relative;
   display: flex;
   flex-direction: column;
 }
 
+ ul {
+   list-style-type: none;
+   padding: 0;
+   font-size: 25px;
+ }
+ 
+ li {
+   padding: 8px;
+ }
+ 
+ li:last-child {
+   border-bottom: none;
+ }
+
 .firstbox h1 {
-  text-align: center;
-  font-size: 60px;
-  font-weight: 900;
-  margin-top: 70px;
-  background-image: linear-gradient(30deg, #5d00ff, #40ff00e7, #ff00f2fc);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+    text-align: center;
+     font-size: 60px;
+     font-weight: 900;
+     margin-top: 70px;
+     background-image: linear-gradient(30deg,#5d00ff,#40ff00e7,#ff00f2fc);
+     -webkit-background-clip: text;
+     background-clip: text;
+     color: transparent;
 }
 
 .location-container {
-  height: 100vh;
+  background-color: #FEDBD0;
+  height: auto;
   width: 70%;
   align-items: center;
-  background-color: #1eaec1;
   margin-left: 15%;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
-  margin-top: 15px;
+  
+}
+
+.pagination-container{
+  height: 100vh;   
+  width: 70%;
+  align-items: center;
+  border-radius: 30px;
+  margin-top: 5%;
+}
+
+.pagination-container h1{
+    color: black;
+    text-align: center;
+    font-size: 60px;
+    font-weight: 900;
 }
 
 .input1 {
@@ -52,7 +74,6 @@
   height: 30px;
   width: 30%;
   padding: 10px;
-  border-radius: 15px;
 }
 
 .input2[type="text"] {
@@ -61,25 +82,11 @@
   font-size: 20px;
   font-weight: 700;
   height: 30px;
-  width: 32%;
+  width: 30%;
   padding: 10px;
-  border-radius: 15px;
   margin-top: 0;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-  font-size: 25px;
-}
-
-li {
-  padding: 8px;
-}
-
-li:last-child {
-  border-bottom: none;
-}
 
 #findlocation {
   margin-top: 10px;
@@ -103,43 +110,6 @@ li:last-child {
   font-size: 15px;
 }
 
-.taskbox,
-.emptybox {
-  width: 32%;
-  height: 70vh;
-  margin-top: 5px;
-  position: absolute;
-  left: 34%; /* Adjusted for centering */
-  font-size: 22px;
-  font-weight: 700;
-  transition: transform 0.5s;
-}
-
-.taskbox {
-  background-color: whitesmoke;
-  border-radius: 6px;
-  z-index: 2;
-}
-
-.emptybox {
-  background-color: white;
-  width: 32%;
-  height: 70vh;
-  position: relative;
-  padding: 0;
-  border-radius: 6px;
-  z-index: 1;
-  overflow: hidden;
-  /* display: flex; */
-  /* align-items: center;
-  justify-content: center; */
-}
-
-#map {
-  height: 70vh;
-  width: 32%;
-  position: relative;
-}
 
 .move-left {
   transform: translate(-60%);
@@ -149,17 +119,7 @@ li:last-child {
   transform: translate(60%);
 }
 
-.attractions {
-  height: 100vh;
-  width: 100%;
-  margin-top: 10px;
-  margin-bottom: 0;
-  text-align: center;
-  justify-content: center;
-  background-color: whitesmoke;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
+
 
 #calculatepath {
   width: 120px;
@@ -175,4 +135,330 @@ li:last-child {
 
 button:hover {
   background-color: #0056b3;
+}
+
+
+.container {
+  height: 100vh;
+  width: 70%;
+  margin-top: 0;
+  position: relative;
+   background: linear-gradient(135deg, #cc2b5e 0%, #753a88 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+}
+
+.taskbox,
+.emptybox {
+       width: 32%;
+       height: 70vh;
+       margin-top: 5px;
+       position: absolute;
+       left: 35%;
+       right: 37%;
+       font-size: 22px;
+       font-weight: 700;
+       transition: transform 0.5s;
+}
+
+
+.taskbox{
+  background-color: azure;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+.emptybox{
+  background-color: aliceblue;
+  border-radius: 6px;
+  z-index: 2;
+}
+
+
+.move-left{
+  transform: translate(-60%);
+}
+
+.move-right{
+ transform: translate(60%);
+}
+
+
+#map-container{
+  width: 100%;
+  max-width: 700px;
+  height: 470px;
+  border-radius: 10px;
+  position: absolute;
+  overflow: hidden;
+}
+
+#map {
+  width: 100%;
+  height: auto;
+  position: relative;
+  top: 0;
+  left: 0
+  
+}
+
+
+/* Tablet view (width between 768px and 1024px) */
+@media (max-width: 1024px) {
+  .location-container {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .input1,
+  .input2[type="text"] {
+    width: 70%;
+    font-size: 18px;
+  }
+
+  #findlocation,
+  #delete,
+  #calculatepath {
+    margin-left: 0;
+    width: 100%;
+    font-size: 16px;
+  }
+
+  .taskbox,
+  .emptybox {
+    width: 40%;
+    height: 60%;
+    left: 10%;
+    right: 10%;
+    font-size: 20px;
+  }
+
+  .firstbox h1 {
+    font-size: 45px;
+  }
+}
+
+/* Mobile view (width below 768px) */
+@media (max-width: 768px) {
+  .location-container {
+    width: 95%;
+    margin-left: 2.5%;
+    border-radius: 15px;
+  }
+
+  .input1,
+  .input2[type="text"] {
+    width: 90%;
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  #findlocation,
+  #delete,
+  #calculatepath {
+    margin-left: 0;
+    width: 90%;
+    font-size: 14px;
+  }
+
+  .taskbox,
+  .emptybox {
+    width: 40%;
+    left: 10%;
+    right: 10%;
+    height: auto;
+    font-size: 18px;
+    overflow: hidden;
+  }
+
+  .firstbox h1 {
+    font-size: 35px;
+    margin-top: 40px;
+  }
+
+  #map-container{
+    width: 100%;
+    max-width: 700px;
+    height: 470px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  #map {
+     width: 100%;
+     height: 100%;
+     position: absolute;
+     top: 0;
+     left: 0; 
+  }
+}
+
+.pagination-container{
+    height: 100vh;
+    width: 100%;
+    background-image: linear-gradient(30deg, #ff0000, #00ff00, #0000ff);
+    margin-top: 10px;
+}
+
+.heading{
+   font-size: 10px;
+}
+  
+.pagination{
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   margin-top: 25px;
+   font-size: 20px;
+}
+
+
+.list-items{
+   list-style: none;
+   margin-top: 5px;
+   display: grid;
+   gap: 30px;
+   max-width: 400px;
+   padding: 0;
+   margin: 20px auto;
+   grid-template-columns: repeat(3 , 1fr);
+}
+
+.list-items li{
+    padding: 20px;
+    background-color: #762cc0;
+    color: #fff;
+    font-weight: bolder;
+    font-size: 15px;
+}
+
+  
+/* Tablet View (768px - 1024px) */
+@media (max-width: 1024px) {
+  .location-container {
+    width: 90%;
+    margin-left: 5%;
+  }
+
+  .input1,
+  .input2[type="text"] {
+    width: 70%;
+    font-size: 18px;
+    padding: 8px;
+  }
+
+  #findlocation,
+  #delete,
+  #calculatepath {
+    margin-left: 0;
+    width: 80%;
+    font-size: 16px;
+  }
+
+  .taskbox,
+  .emptybox {
+    width: 40%;
+    left: 10%;
+    right: 10%;
+    font-size: 20px;
+    height: auto;
+  }
+
+  .firstbox h1 {
+    font-size: 45px;
+  }
+
+  .pagination-container {
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .heading {
+    font-size: 14px;
+  }
+
+  .list-items {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+
+  .list-items li {
+    font-size: 14px;
+    padding: 15px;
+  }
+}
+
+/* Mobile View (below 768px) */
+@media (max-width: 768px) {
+  .location-container {
+    width: 95%;
+    margin-left: 2.5%;
+    border-radius: 15px;
+  }
+
+  .input1,
+  .input2[type="text"] {
+    width: 90%;
+    font-size: 16px;
+    padding: 8px;
+  }
+
+  #findlocation,
+  #delete,
+  #calculatepath {
+    margin-left: 0;
+    width: 90%;
+    font-size: 14px;
+  }
+
+  .taskbox,
+  .emptybox {
+    width: 40%;
+    left: 10%;
+    right: 10%;
+    height: auto;
+    font-size: 18px;
+    overflow: hidden;
+  }
+
+  .firstbox h1 {
+    font-size: 35px;
+    margin-top: 40px;
+  }
+
+  #map-container {
+    width: 95%;
+    height: 300px;
+    margin: 10px auto;
+    border-radius: 10px;
+  }
+
+  .pagination-container {
+    height: auto;
+    padding: 20px 10px;
+  }
+
+  .heading {
+    font-size: 12px;
+    text-align: center;
+  }
+
+  .pagination {
+    font-size: 16px;
+    flex-wrap: wrap;
+  }
+
+  .list-items {
+    grid-template-columns: repeat(1, 1fr);
+    gap: 15px;
+    padding: 10px;
+  }
+
+  .list-items li {
+    font-size: 13px;
+    padding: 12px;
+  }
 }

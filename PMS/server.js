@@ -8,6 +8,7 @@ dotenv.config();
 const app = express();
 app.use(cors({ origin: '*' }));
 
+
 const geminiApiKey = process.env.REACT_APP_GEMINI_API_KEY;
 
 if (!geminiApiKey) {

@@ -7,7 +7,7 @@ const Firstpage = () => {
 
   useEffect(() => {
     
-    const h1Element = document.querySelector('#first_page h1');
+    const h1Element = document.querySelector('.first-page-container h1');
     if (h1Element) {
       setTimeout(() => {
         h1Element.classList.add('loaded');
@@ -36,7 +36,13 @@ const Firstpage = () => {
       {!showMainPage && (
         <div id="first_page" className="first-page-container">
           <h1 className="welcome-text">
-            WELCOME TO <br /> PATH MANAGEMENT SYSTEM
+           WELCOME
+          <br/>
+           TO PATH
+          <br/>
+            MANAGEMENT
+          <br/>
+           SYSTEM
           </h1>
         </div>
       )}

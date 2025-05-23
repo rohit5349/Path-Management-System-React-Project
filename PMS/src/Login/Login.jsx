@@ -2,19 +2,25 @@ import React, { useState } from "react";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./Login.css";
 import axios from "axios";
+import { useNavigate , useLocation} from "react-router-dom";
 
 const Login = () => {
-  const [activeTab, setActiveTab] = useState("login"); 
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from || '/';
+  const [activeTab, setActiveTab] = useState("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState(""); 
   const [confirmPassword, setConfirmPassword] = useState(""); 
-  const [role, setRole] = useState("");  // State for role
+  const [role, setRole] = useState("");  
 
   const backendUrl = "http://localhost:4000/api";
 
   const handleLogin = async (e) => {
     e.preventDefault();
+    console.log(e);
+    
     try {
       const response = await axios.post(`${backendUrl}/login`, {
         email,
@@ -22,10 +28,13 @@ const Login = () => {
       });
       if (response.data?.token) {
         alert("Login Successfully");
-        localStorage.setItem("token", response.data.token); // Corrected 'response.token.data'
+        localStorage.setItem("token", response.data.token);
+        localStorage.setItem('isLoggedIn' , 'true');
+        localStorage.setItem('username', response.data.name);
       } else {
         throw new Error("Unexpected response format");
       }
+      navigate(from)
     } catch (error) {
       alert("Login Failed: " + error.response?.data?.message);
     }
@@ -46,6 +55,7 @@ const Login = () => {
       });
       alert("SignUp Successfully! Please Login!");
       localStorage.setItem("token", response.data.token); // Corrected 'response.token.data'
+       localStorage.setItem('username' , response.data.name);
       setActiveTab("login");
     } catch (error) {
       alert("Signup Failed: " + error.response?.data?.message);
@@ -54,6 +64,9 @@ const Login = () => {
 
   return (
     <div className="login-container">
+       <video autoPlay loop muted className="background-video">
+         <source src='./video/UI.mp4' type="video/mp4" />
+       </video>
       <div className="tab-container">
         <button
           className={`tab-button ${activeTab === "login" ? "active" : ""}`}
